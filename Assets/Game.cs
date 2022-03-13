@@ -12,9 +12,12 @@ public class Game : MonoBehaviour
     //Timer Related
     public float lastHit;
     public float hitCD;
+
+    public GameObject gameDad;
     // Start is called before the first frame update
     void Start()
     {
+        gameDad = GameObject.Find("GameManager");
         currentTarget = target[Random.Range(0, 6)];
         currentTarget.gameObject.SetActive(true);
     }
@@ -36,6 +39,7 @@ public class Game : MonoBehaviour
         {
             currentTarget.gameObject.SetActive(false);
             Debug.Log("hit");
+            gameDad.gameObject.GetComponent<GameDad>().addHappiness(5);
         }
     }
 

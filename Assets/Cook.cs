@@ -25,9 +25,12 @@ public class Cook : MonoBehaviour
 
     public bool spawnable;
 
+    public GameObject gameDad;
+
     // Start is called before the first frame update
     void Start()
     {
+        gameDad = GameObject.Find("GameManager");
         tries = 0;
 
         currentSe = redSelect[selectNum];
@@ -83,7 +86,8 @@ public class Cook : MonoBehaviour
                 if (usedFood[0] == 0 && usedFood[1] == 0 && usedFood[2] == 0 && usedFood[3] == 0)
                 {
                     Debug.Log("Allin");
-
+                    gameDad.gameObject.GetComponent<GameDad>().addHealth();
+                    gameDad.gameObject.GetComponent<GameDad>().RemoveIcon(2);
                 }
             }
 
