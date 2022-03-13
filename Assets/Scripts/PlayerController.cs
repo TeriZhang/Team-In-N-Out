@@ -27,18 +27,22 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.W))
         {
             velocity = new Vector2(0, 0);
+            this.gameObject.GetComponent<Animator>().SetBool("back", false);
         }
         if (Input.GetKeyUp(KeyCode.A))
         {
             velocity = new Vector2(0, 0);
+            this.gameObject.GetComponent<Animator>().SetBool("side", false);
         }
         if (Input.GetKeyUp(KeyCode.S))
         {
             velocity = new Vector2(0, 0);
+            this.gameObject.GetComponent<Animator>().SetBool("forward", false);
         }
         if (Input.GetKeyUp(KeyCode.D))
         {
             velocity = new Vector2(0, 0);
+            this.gameObject.GetComponent<Animator>().SetBool("sideR", false);
         }
     }
 
@@ -49,18 +53,22 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             velocity = new Vector2(0, 1);
+            this.gameObject.GetComponent<Animator>().SetBool("back", true);
         }
         if (Input.GetKey(KeyCode.S))
         {
             velocity = new Vector2(0, -1);
+            this.gameObject.GetComponent<Animator>().SetBool("forward", true);
         }
         if (Input.GetKey(KeyCode.A))
         {
             velocity = new Vector2(-1, 0);
+            this.gameObject.GetComponent<Animator>().SetBool("side", true);
         }
         if (Input.GetKey(KeyCode.D))
         {
             velocity = new Vector2(1, 0);
+            this.gameObject.GetComponent<Animator>().SetBool("sideR", true);
         }
 
     }
