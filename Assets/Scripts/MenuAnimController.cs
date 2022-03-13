@@ -40,6 +40,11 @@ public class MenuAnimController : MonoBehaviour
         Application.Quit();
     }
 
+    public void FromStart()
+    {
+        SceneManager.LoadScene(0);
+    }
+
 
 
 
