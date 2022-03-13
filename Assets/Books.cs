@@ -11,9 +11,12 @@ public class Books : MonoBehaviour
     public List<GameObject> books;
     public GameObject bottomBook;
     public int bookNum;
+
+    public GameObject gameDad;
     // Start is called before the first frame update
     void Start()
     {
+        gameDad = GameObject.Find("GameManager");
         currentSign = signs[Random.Range(0, 4)];
         currentSign.SetActive(true);
 
@@ -41,6 +44,9 @@ public class Books : MonoBehaviour
                 bookNum -= 1;
                 bottomBook = books[bookNum];
                 bottomBook.SetActive(true);
+
+                gameDad.gameObject.GetComponent<GameDad>().addTidiness(5);
+                gameDad.gameObject.GetComponent<GameDad>().RemoveIcon(1);
             }
             else
             {

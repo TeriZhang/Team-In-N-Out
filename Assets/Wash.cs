@@ -27,9 +27,12 @@ public class Wash : MonoBehaviour
     public bool noOverlap;
     public float Overlaped;
 
+    public GameObject gameDad;
+
     // Start is called before the first frame update
     void Start()
     {
+        gameDad = GameObject.Find("GameManager");
         opened = false;
         inAmount = 0;
     }
@@ -179,7 +182,10 @@ public class Wash : MonoBehaviour
         if(noOverlap == true && allIn == true)
         {
             Debug.Log("Win Wash");
+            gameDad.gameObject.GetComponent<GameDad>().addTidiness(30);
+            gameDad.gameObject.GetComponent<GameDad>().RemoveIcon(3);
         }
+
 
         
     }

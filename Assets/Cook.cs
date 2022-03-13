@@ -8,8 +8,13 @@ public class Cook : MonoBehaviour
     public List<GameObject> RandomFood;
     public int NumRandomFood;
     public int FoodNum;
+    public int storedRandomFood;
     public GameObject currentRecipe;
     public GameObject currentRandomFood;
+
+    public List<int> usedFood;
+    public List<GameObject> randomRecipe;
+    public int tries;
 
     public List<GameObject> food;
     public GameObject currentFd;
@@ -20,11 +25,19 @@ public class Cook : MonoBehaviour
 
     public bool spawnable;
 
+    public GameObject gameDad;
+
     // Start is called before the first frame update
     void Start()
     {
+        gameDad = GameObject.Find("GameManager");
+        tries = 0;
+
         currentSe = redSelect[selectNum];
         currentSe.SetActive(true);
+
+        spawnable = true;
+        NumRandomFood = 0;
 
         RecipeLoop();
     }
@@ -69,34 +82,52 @@ public class Cook : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 StartCoroutine(FoodFall());
-                spawnable = false;            
+                spawnable = false;
+                if (usedFood[0] == 0 && usedFood[1] == 0 && usedFood[2] == 0 && usedFood[3] == 0)
+                {
+                    Debug.Log("Allin");
+                    gameDad.gameObject.GetComponent<GameDad>().addHealth();
+                    gameDad.gameObject.GetComponent<GameDad>().RemoveIcon(2);
+                }
             }
 
         }
+
+        
     }
 
     private void RecipeLoop()
     {     
         for (int FoodNum = 0; FoodNum < 4; FoodNum++)
         {
-            NumRandomFood = Random.Range(0, 4);
+            //
             currentRecipe = Recipe[FoodNum];
-      
+            
+            
             currentRandomFood = RandomFood[NumRandomFood];
+            randomRecipe[FoodNum] = RandomFood[NumRandomFood];
             currentRandomFood.transform.position = currentRecipe.transform.position;
             currentRandomFood.SetActive(true);
+            NumRandomFood += 1;
+
         }
     }
 
     IEnumerator FoodFall()
     {
-        currentFd = food[selectNum];
-        currentFd.gameObject.SetActive(true);
+        
+            currentFd = food[selectNum];
+            currentFd.gameObject.SetActive(true);
 
-        yield return new WaitForSeconds(0.5f);
+        usedFood[selectNum] = 0;
 
-        currentFd.gameObject.SetActive(false);
-        currentFd.transform.position = new Vector3(3.55f, 1.99f, -0.68f);
+            yield return new WaitForSeconds(0.5f);
+
+            currentFd.gameObject.SetActive(false);
+            currentFd.transform.position = new Vector3(3.55f, 1.99f, -0.68f);
+           
+        
+        
     }
 
 
