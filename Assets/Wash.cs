@@ -20,16 +20,36 @@ public class Wash : MonoBehaviour
     public GameObject cover;
     public bool opened;
 
+    public List<GameObject> inPlates;
+    public int inAmount;
+
+    public bool allIn;
+    public bool noOverlap;
+    public float Overlaped;
+
     // Start is called before the first frame update
     void Start()
     {
         opened = false;
+        inAmount = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (controlable == true)
+        {
+            currentBig.gameObject.GetComponent<PlateControl>().speed = 2f;
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                currentBig.gameObject.GetComponent<PlateControl>().speed = 0;
+                controlable = false;
+
+            }
+            
+
+        }
+
         if (opened == true)
         {
             if(controlable == false)
@@ -75,15 +95,13 @@ public class Wash : MonoBehaviour
                     currentBig.gameObject.SetActive(true);
                     controlable = true;
                     spawnable = false;
+                    currentBig.gameObject.GetComponent<PlateControl>().speed = 2f;
                 }
                 
             }
 
 
-            if(controlable == true)
-            {
-                currentBig.gameObject.GetComponent<PlateControl>().speed = 2f;
-            }
+            
 
             if (selected == true)
             {
@@ -124,6 +142,9 @@ public class Wash : MonoBehaviour
             
         }
 
+        // if Controlable, the object is able to move
+        
+
         //Start Mini Game
         if (opened == false)
         {
@@ -139,14 +160,60 @@ public class Wash : MonoBehaviour
             }
         }
 
-        else if (controlable == true)
+        if(inPlates[1] != null && inPlates[2] != null && inPlates[3] != null && inPlates[0] != null)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                controlable = false;
-            }
+            allIn = true;
+        }
+
+        if(Overlaped > 0)
+        {
+            noOverlap = false;
+        }
+
+        if(Overlaped == 0)
+        {
+            noOverlap = true;
+        }
+
+        //Win Here
+        if(noOverlap == true && allIn == true)
+        {
+            Debug.Log("Win Wash");
         }
 
         
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Plate"))
+        {
+            inPlates[inAmount] = other.gameObject;
+            inAmount += 1;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Plate"))
+        {
+            inPlates[inAmount] = null;
+            inAmount -= 1;
+            if(inAmount <= 0)
+            {
+                inAmount = 0;
+            }
+        }
+    }
+
+    public void OverLap()
+    {
+        Overlaped += 1;
+    }
+
+    public void NoOverLap()
+    {
+        Overlaped -= 1;
+    }
+
 }

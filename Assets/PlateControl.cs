@@ -25,19 +25,19 @@ public class PlateControl : MonoBehaviour
     {
         plateRb.MovePosition(plateRb.position + velocity * Time.deltaTime);
         //Cancel Movement Function
-        if (Input.GetKeyUp(KeyCode.W))
+        if (Input.GetKeyUp(KeyCode.UpArrow))
         {
             velocity = new Vector2(0, 0);
         }
-        if (Input.GetKeyUp(KeyCode.A))
+        if (Input.GetKeyUp(KeyCode.LeftArrow))
         {
             velocity = new Vector2(0, 0);
         }
-        if (Input.GetKeyUp(KeyCode.S))
+        if (Input.GetKeyUp(KeyCode.DownArrow))
         {
             velocity = new Vector2(0, 0);
         }
-        if (Input.GetKeyUp(KeyCode.D))
+        if (Input.GetKeyUp(KeyCode.RightArrow))
         {
             velocity = new Vector2(0, 0);
         }
@@ -47,22 +47,24 @@ public class PlateControl : MonoBehaviour
     {
         plateRb.MovePosition(plateRb.position + velocity * Time.fixedDeltaTime);
         //Movement Fuction
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.UpArrow))
         {
             velocity = new Vector2(0, speed);
         }
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.DownArrow))
         {
             velocity = new Vector2(0, -speed);
         }
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.LeftArrow))
         {
             velocity = new Vector2(-speed, 0);
         }
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.RightArrow))
         {
             velocity = new Vector2(speed, 0);
         }
 
     }
+
+    
 }
