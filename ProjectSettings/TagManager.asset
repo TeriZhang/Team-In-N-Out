@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Plate
   - PlateCheck
+  - DestroyBox
   layers:
   - Default
   - TransparentFX

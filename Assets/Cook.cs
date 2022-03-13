@@ -4,15 +4,100 @@ using UnityEngine;
 
 public class Cook : MonoBehaviour
 {
+    public List<GameObject> Recipe;
+    public List<GameObject> RandomFood;
+    public int NumRandomFood;
+    public int FoodNum;
+    public GameObject currentRecipe;
+    public GameObject currentRandomFood;
+
+    public List<GameObject> food;
+    public GameObject currentFd;
+
+    public List<GameObject> redSelect;
+    public GameObject currentSe;
+    public int selectNum;
+
+    public bool spawnable;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        currentSe = redSelect[selectNum];
+        currentSe.SetActive(true);
+
+        RecipeLoop();
     }
 
     // Update is called once per frame
     void Update()
-    {
-        
+    {         
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            if (selectNum >= 3)
+            {
+                selectNum = 3;
+            }
+            else
+            {
+                currentSe.SetActive(false);
+                selectNum += 1;
+                currentSe = redSelect[selectNum];
+                currentSe.SetActive(true);
+                spawnable = true;
+
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            if (selectNum <= 0)
+            {
+                selectNum = 0;
+            }
+            else
+            {
+                currentSe.SetActive(false);
+                selectNum -= 1;
+                currentSe = redSelect[selectNum];
+                currentSe.SetActive(true);
+                spawnable = true;
+            }
+        }
+
+        if (spawnable == true)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                StartCoroutine(FoodFall());
+                spawnable = false;            
+            }
+
+        }
     }
+
+    private void RecipeLoop()
+    {     
+        for (int FoodNum = 0; FoodNum < 4; FoodNum++)
+        {
+            NumRandomFood = Random.Range(0, 4);
+            currentRecipe = Recipe[FoodNum];
+      
+            currentRandomFood = RandomFood[NumRandomFood];
+            currentRandomFood.transform.position = currentRecipe.transform.position;
+            currentRandomFood.SetActive(true);
+        }
+    }
+
+    IEnumerator FoodFall()
+    {
+        currentFd = food[selectNum];
+        currentFd.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(0.5f);
+
+        currentFd.gameObject.SetActive(false);
+        currentFd.transform.position = new Vector3(3.55f, 1.99f, -0.68f);
+    }
+
+
 }
